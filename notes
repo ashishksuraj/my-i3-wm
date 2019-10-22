@@ -1,1 +1,3 @@
 just replace your files by these files you can find at location /home/.config/i3
+
+bitter.sh will change the color of your battery percentage green to red during 100% to 20% and also will do for critical.
