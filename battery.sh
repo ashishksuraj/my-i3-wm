@@ -22,12 +22,8 @@ fi
 
 if [[ "${BATTERY_STATE}" = "discharging" ]]; then
     echo "${BATTERY_ICON} ${BATTERY_POWER}%"
-    echo "${BATTERY_ICON} ${BATTERY_POWER}%"
-    echo ""
 else
     echo " ${BATTERY_POWER}%"
-    echo " ${BATTERY_POWER}%"
-    echo ""
 fi
 
 if [[ "${BATTERY_POWER}" -le "${URGENT_VALUE}" ]]; then

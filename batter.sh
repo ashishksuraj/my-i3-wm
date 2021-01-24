@@ -1,12 +1,53 @@
 #!/bin/bash
+
+BATTERY_STATE=$(echo "${BATTERY_INFO}" | upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full" | awk '{print $2}')
 BAT=$(acpi -b | grep -E -o '[0-9][0-9][0-9]?%')
 # Full and short texts
-echo "BAT $BAT"
-echo "bat: $BAT"
+#echo "BAT $BAT"
+#echo "bat: $BAT"
+
+#foo=$(( $BAT / 10 ));
+
+if [[ "${BATTERY_STATE}" = "discharging" ]]; then
+if [[ "${BAT%?}" -eq 100 ]]; then
+    echo "" 
+elif [[ "${BAT%?}" -gt 85 ]]; then
+    echo " ${BAT%?}%"  
+elif [[ "${BAT%?}" -gt 60 ]]; then
+     echo " ${BAT%?}%"
+elif [[ "${BAT%?}" -gt 40 ]]; then
+     echo " ${BAT%?}%"
+elif [[ "${BAT%?}" -gt 19 ]]; then
+     echo " ${BAT%?}%"
+elif [[ "${BAT%?}" -le 19 ]]; then
+notify-send --urgency=critical "Hay, User!" "Plug the fuc**ng Charger !!!" -i $(echo info)
+     echo " ${BAT%?}%"
+else
+    echo " ${BAT%?}%"
+fi 
+else
+if [[ "${BAT%?}" -eq 100 ]]; then
+notify-send --urgency=normal --expire-time=2 "Hello, User!"   "The Battery is Full !!!"  -i $(echo info)
+    echo " " 
+elif [[ "${BAT%?}" -gt 85 ]]; then
+    echo " ${BAT%?}%"  
+elif [[ "${BAT%?}" -gt 60 ]]; then
+     echo " ${BAT%?}%"
+elif [[ "${BAT%?}" -gt 40 ]]; then
+     echo " ${BAT%?}%"
+elif [[ "${BAT%?}" -gt 19 ]]; then
+     echo " ${BAT%?}%"
+elif [[ "${BAT%?}" -le 19 ]]; then
+     echo " ${BAT%?}%"
+else
+    echo " ${BAT%?}%"
+fi 
+fi
+
 
 # Set different color for battery percentage and BAT spelling/ will go from green to red
 
-[ ${BAT%?} -le 20 ] && echo "#fc0303"
+[ ${BAT%?} -le 20 ] && echo "#FF0000"
 [ ${BAT%?} -le 21 ] && echo "#ff6a00"
 [ ${BAT%?} -le 22 ] && echo "#ff6f00"
 [ ${BAT%?} -le 23 ] && echo "#ff7300"
@@ -86,7 +127,8 @@ echo "bat: $BAT"
 [ ${BAT%?} -le 97 ] && echo "#4dff00"
 [ ${BAT%?} -le 98 ] && echo "#48ff00"
 [ ${BAT%?} -le 99 ] && echo "#44ff00"
-[ ${BAT%?} -le 100 ] && echo "#00fc2a"
+[ ${BAT%?} -le 100 ] && echo "#00ff00"
+[ ${BAT%?} -le 101 ] && echo "#00ff00"
 
-[ ${BAT%?} -le 9 ] && exit 33
+[ ${BAT%?} -le 15 ] && exit 33
 exit 0
